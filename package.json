@@ -1,5 +1,5 @@
 {
-  "name": "fetch",
+  "name": "@dillonchr/fetch",
   "version": "1.0.1",
   "description": "fetch like you do in browsers",
   "main": "main.js",
