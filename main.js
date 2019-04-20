@@ -1,5 +1,6 @@
 const http = require('http');
 const https = require('https');
+const urlLib = require('url');
 
 const HTTPS_REGEX = /^https:\/\//i;
 const getProtocolFromUri = (uri) => HTTPS_REGEX.test(uri) ? https : http;
@@ -9,12 +10,23 @@ const fetch = ({url, headers, method, body}, callback) => {
         return callback(new Error('No `url` provided in options'));
     }
 
+    const { protocol, hostname, port, path, query } = urlLib.parse(url);
+    if (!hostname) {
+        return callback(new Error(`No hostname could be found in ${url}`));
+    }
+
+
     const options = {
+        headers,
+        hostname,
         method,
-        headers
+        path,
+        port,
+        protocol,
+        query
     };
 
-    const req = (getProtocolFromUri(url)).request(url, options, (response) => {
+    const req = (getProtocolFromUri(url)).request(options, (response) => {
         let body = '';
         response.on('data', (chunk) => body += chunk);
         response.on('end', () => {
