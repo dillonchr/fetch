@@ -12,9 +12,9 @@ fetch({
     url: 'https://bot.whatismyipaddress.com'
 }, (err, body) => {
     if (err) {
-        return console.log('Module must be broken, heh.');
+        return console.log('Module must be broken, heh.', err);
     }
-    console.log('Looking into the mirror, I can tell we're at', body);
+    console.log('Looking into the mirror, I can tell we\'re at', body);
 });
 ```
 
